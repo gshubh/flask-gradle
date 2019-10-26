@@ -1,0 +1,6 @@
+README.md
+setup.py
+flask_gradle.egg-info/PKG-INFO
+flask_gradle.egg-info/SOURCES.txt
+flask_gradle.egg-info/dependency_links.txt
+flask_gradle.egg-info/top_level.txt
