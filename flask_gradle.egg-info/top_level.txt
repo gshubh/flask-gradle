@@ -1,1 +1,1 @@
-src/helloWorld
+build/lib/src/helloWorld
