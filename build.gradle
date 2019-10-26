@@ -10,6 +10,15 @@ plugins{
     id 'com.bmuschko.docker-remote-api' version '5.2.0'
 }
 
+task build_wheel  {
+  doFirst{
+    exec {
+        commandLine 'python setup.py bdist_wheel'
+    }
+    print "Packaging Done!"
+  }
+}
+
 task test_hello (type: Exec){
 	  workingDir 'src/helloWorld'
     commandLine 'py.test'
