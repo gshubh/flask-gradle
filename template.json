@@ -1,0 +1,33 @@
+{
+  "builders":[
+    {
+      "type": "docker",
+      "image": "python",
+      "commit": true,
+      "run_command": [
+        "gradle build"
+      ]
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "apt-get update",
+        "pip install -r requirements.txt"
+      ]
+    }
+  ],
+
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "localhost:5000",
+        "tag": "packer latest"
+      },
+      "docker-push"
+    ]
+  ]
+}
