@@ -1,7 +1,7 @@
 FROM python:3.6
 
 # Create app directory
-WORKDIR /app
+WORKDIR /src/helloWorld/hello
 
 # Install app dependencies
 COPY . /app
@@ -9,7 +9,7 @@ COPY . /app
 RUN pip install -r requirements.txt
 
 # Bundle app source
-COPY src /app
+COPY src/helloWorld/hello
 
 EXPOSE 8080
 CMD [ "gradle build" ]

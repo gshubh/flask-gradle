@@ -4,9 +4,11 @@
       "type": "docker",
       "image": "python",
       "commit": true,
-      "run_command": [
-        "gradle build"
-      ]
+      "changes": [
+        "WORKDIR /src/helloWorld/hello",
+        "EXPOSE 5000",
+        "LABEL version=1.0"
+        ]
     }
   ],
 
@@ -15,7 +17,8 @@
       "type": "shell",
       "inline": [
         "apt-get update",
-        "pip install -r requirements.txt"
+        "pip install -r requirements.txt",
+        "gradle build"
       ]
     }
   ],
