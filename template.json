@@ -1,0 +1,36 @@
+{
+  "builders":[
+    {
+      "type": "docker",
+      "image": "python",
+      "commit": true,
+      "changes": [
+        "WORKDIR /src/helloWorld/hello",
+        "EXPOSE 5000",
+        "LABEL version=1.0"
+        ]
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "apt-get update",
+        "pip install -r requirements.txt",
+        "gradle build"
+      ]
+    }
+  ],
+
+  "post-processors": [
+    [
+      {
+        "type": "docker-tag",
+        "repository": "localhost:5000",
+        "tag": "packer latest"
+      },
+      "docker-push"
+    ]
+  ]
+}

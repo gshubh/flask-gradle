@@ -6,15 +6,25 @@
  */
 
 plugins{
-  id "com.innobead.python" version "1.3.7"
+    id "com.innobead.python" version "1.3.7"
+    id 'com.bmuschko.docker-remote-api' version '5.2.0'
 }
 
-task run_hello (type: Exec){
-	workingDir 'src/helloWorld'
-  commandLine "python", "hello.py"
+task build_wheel  {
+  doFirst{
+    exec {
+        commandLine 'python setup.py bdist_wheel'
+    }
+    print "Packaging Done!"
+  }
 }
 
 task test_hello (type: Exec){
-	workingDir 'src/helloWorld'
-  commandLine 'py.test'
+	  workingDir 'src/helloWorld'
+    commandLine 'py.test'
+}
+
+task run_hello (type: Exec){
+    workingDir 'src/helloWorld'
+    commandLine "python", "hello.py"
 }
