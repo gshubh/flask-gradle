@@ -1,0 +1,52 @@
+image: gitlab/dind
+
+variables:
+  WORK_DIR: ${CI_PROJECT_NAME}
+  BRANCH: ${CI_COMIT_REF_NAME}
+  REGISTRY: registry.gitlab.com/gshubh/flask-gradle
+
+before_script:
+  - echo "Logging in to docker registry"
+
+after_script:
+  - echo "Completed execution "
+
+
+stages:
+  - ver
+  - build
+  - test
+  - deploy
+
+
+ver:
+  stage: ver
+  script:
+    - python --version
+    - whoami
+
+
+build_project:
+  stage: build
+  script:
+    - echo "Entering build stage - 1"
+    - docker login -u gshubh -p $PASS registry.gitlab.com
+    - docker build -t $REGISTRY .
+    - docker push $REGISTRY
+
+
+test_project:
+  stage: test
+  script:
+    - docker login -u gshubh -p $PASS registry.gitlab.com
+    - docker pull $REGISTRY
+    - docker run --name=temp -p 5000:8040 -i $REGISTRY npn run ci
+
+
+deploy_project:
+  stage: deploy
+  script:
+    - docker login -u gshubh -p $PASS registry.gitlab.com
+    - docker pull $REGISTRY
+    - docker stop $(docker ps -a -q) || true docker rm $(docker ps -a -q) || true
+    - docker run --name=temp -p 5000:8040 -i $REGISTRY npn run ci
