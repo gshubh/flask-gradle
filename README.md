@@ -27,16 +27,12 @@ To install python if python is not installed
 Link: https://linuxize.com/post/how-to-install-python-3-7-on-ubuntu-18-04/
 ```
 
-To install all the dependencies run the given below inside the project directory.
+To install all the dependencies run the given below command inside the project directory.
 
 ```bash
 $ pip install -r requirements.txt
 ```
 
-
-A step by step series of examples that tell you how to get a development env running
-
-###Installing Docker
 
 ```bash
 Link: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
@@ -53,7 +49,7 @@ Link: https://linuxize.com/post/how-to-install-gradle-on-ubuntu-18-04/
 
 ##### Download Packer
 
-* [Packer Download](https://www.packer.io/downloads.htm)
+* [Packer Download](https://www.packer.io/downloads)
 
 ##### Install Packer
 
@@ -70,6 +66,37 @@ $ packer version
 ```
 
 Packer installation completed.
+
+### Download and Install Gradle
+
+* [Gradle Install](https://gradle.org/install/)
+
+
+## Continuous Integration & Continuous Deployment
+
+1. Host your git repo in Gitlab. It can be either private or public and still use the free CI. **NOTE: Make sure it’s name is all lowercase.** A mistake I wish I had not made.
+2. Create a ***.gitlab-ci.yml*** in the root of your project. This will trigger the CI engine
+
+In the gitlab-ci file you will define stages of activity such as compiling and building the project,
+running unit tests, building a docker image, and logging in remotely to your server and pulling down the image and rerunning it.
+
+### Building Stage
+
+In the gitlab-ci file build stage is defined properly. Choose what docker image to work with and run your before_script, script, and after_script.
+
+
+2. Login in to the gitlab registry
+2. Create an image of the project using the docker build command or you can use already created registry image of the project.
+3. Push that image into the gitlab registry.
+
+### Deployment Stage
+
+
+##### Install and configure a gitlab runner (Ubuntu 18.04)
+
+* [Gitlab Runner](https://io-deck.com/how-to-install-and-configure-gitlab-runner.html#introduction)
+
+
 
 ## Running the tests
 
@@ -95,7 +122,7 @@ Give an example
 
 Add additional notes about how to deploy this on a live system
 
-## Built With
+## Framework and Tools used
 
 * [Flask](http://flask.palletsprojects.com/en/1.1.x/) - The web framework used
 * [Gradle](https://docs.gradle.org/current/userguide/userguide.html) - Build Automation Tool
@@ -103,9 +130,6 @@ Add additional notes about how to deploy this on a live system
 * [Docker](https://docs.docker.com/get-started/) - To Dockerize the the Flask application
 * [Gitlab](https://docs.gitlab.com/ee/user/index.html) - To create CI/CD pipeline for the project using "".gitlab-ci.yml" file.
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
@@ -113,13 +137,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+* **Shubham Gupta** - *Initial work* - [gshubh](https://github.com/gshubh)
 
 ## Acknowledgments
 
