@@ -1,4 +1,6 @@
 # test_hello.py
+
+import unittest
 from hello import app
 
 def test_hello():
@@ -6,3 +8,6 @@ def test_hello():
 
     assert response.status_code == 200
     assert response.data == 'Hello World!'
+
+if __name__ == '__main__':
+    unittest.main()

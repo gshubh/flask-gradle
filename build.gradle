@@ -19,12 +19,12 @@ task build_wheel  {
   }
 }
 
-task test_hello (type: Exec){
-	  workingDir 'src/helloWorld'
-    commandLine 'py.test'
-}
-
 task run_hello (type: Exec){
     workingDir 'src/helloWorld'
     commandLine "python", "hello.py"
+}
+
+task test_hello (type: Exec){
+	  workingDir 'src/helloWorld'
+    commandLine 'py.test'
 }
