@@ -7,46 +7,62 @@ variables:
 
 before_script:
   - echo "Logging in to docker registry"
-
+   
 after_script:
   - echo "Completed execution "
-
-
+  
+  
 stages:
-  - ver
   - build
   - test
   - deploy
-
-
-ver:
-  stage: ver
+   
+    
+build_wheel:
+  stage: build
   script:
-    - python --version
-    - whoami
-
-
-build_project:
+    - apt-get update -qy
+    - apt-get install -y python-dev python-pip
+    - pip install wheel
+    - python setup.py bdist_wheel
+  artifacts:
+    paths:
+    - dist/
+    expire_in: 1 week
+    
+   
+   
+build_docker:
   stage: build
   script:
     - echo "Entering build stage - 1"
     - docker login -u gshubh -p $PASS registry.gitlab.com
+    - apt-get update -qy
+    - apt-get install -y python-dev python-pip
+    - pip install -r requirements.txt
     - docker build -t $REGISTRY .
     - docker push $REGISTRY
 
-
+    
 test_project:
   stage: test
   script:
     - docker login -u gshubh -p $PASS registry.gitlab.com
     - docker pull $REGISTRY
-    - docker run --name=temp -p 5000:8040 -i $REGISTRY npn run ci
-
-
+    - apt-get update -qy
+    - apt-get install -y python-dev python-pip
+    - pip install -r requirements.txt
+    - pip install pytest==3.0.7
+    - py.test
+    # - docker run --name=temp -p 8090:8085 -i $REGISTRY 
+    
+    
 deploy_project:
   stage: deploy
   script:
     - docker login -u gshubh -p $PASS registry.gitlab.com
     - docker pull $REGISTRY
-    - docker stop $(docker ps -a -q) || true docker rm $(docker ps -a -q) || true
-    - docker run --name=temp -p 5000:8040 -i $REGISTRY npn run ci
+    # - docker stop $(docker ps -a -q) || true docker rm $(docker ps -a -q) || true
+    - docker run --name=temp -p 8090:8085 -i $REGISTRY 
+
+
