@@ -8,6 +8,11 @@ WORKDIR /app
 # Install app dependencies
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["src/helloWorld/"]
+EXPOSE 8084
+
+RUN chmod +x ./src/helloWorld
+
+ENTRYPOINT ["./src/helloWorld"]
 
 CMD ["python hello.py"]
+CMD ["py.test"]
